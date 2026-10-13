@@ -89,6 +89,9 @@ class ExplicitImportsAltTest extends AnalysisRuleTest {
 
   Future<void> test_configured_package_is_excluded() async {
     newFile('$testPackageRootPath/analysis_options.yaml', '''
+linter:
+  rules:
+    explicit_imports: true
 plugins:
   explicit_imports_alt:
     path: .
@@ -103,6 +106,9 @@ plugins:
 
   Future<void> test_workspace_configured_package_is_excluded() async {
     newFile('$workspaceRootPath/analysis_options.yaml', '''
+linter:
+  rules:
+    explicit_imports: true
 plugins:
   explicit_imports_alt:
     path: .
@@ -117,6 +123,9 @@ plugins:
 
   Future<void> test_configured_uri_glob_is_excluded() async {
     newFile('$testPackageRootPath/analysis_options.yaml', '''
+linter:
+  rules:
+    explicit_imports: true
 plugins:
   explicit_imports_alt:
     path: .
@@ -131,6 +140,9 @@ plugins:
 
   Future<void> test_commented_yaml_exclusion_list_is_excluded() async {
     newFile('$testPackageRootPath/analysis_options.yaml', '''
+linter:
+  rules:
+    explicit_imports: true
 plugins:
   explicit_imports_alt:
     path: .
@@ -155,6 +167,48 @@ plugins:
   Future<void> test_as_prefix_is_allowed() async {
     const import = "import 'package:some_pkg/some_pkg.dart' as some;";
     await assertNoDiagnostics('$import\nfinal _ = const some.SomePkg();\n');
+  }
+
+  Future<void> test_exclusions_refresh_when_configuration_changes() async {
+    const options = '''
+linter:
+  rules:
+    explicit_imports: true
+plugins:
+  explicit_imports_alt:
+    path: .
+''';
+    final optionsPath = '$testPackageRootPath/analysis_options.yaml';
+    const import = "import 'package:some_pkg/some_pkg.dart';";
+    const source = '$import\nfinal value = const SomePkg();\n';
+
+    final optionsFile = newFile(optionsPath, options);
+    final first = newFile(
+      '$testPackageLibPath/first.dart',
+      '$source// initial\n',
+    );
+    await assertDiagnosticsInFile(first.path, [lint(0, import.length)]);
+
+    optionsFile.writeAsStringSync(
+      '$options    # exclude_packages:\n    #   - some_pkg\n',
+    );
+    final second = newFile(
+      '$testPackageLibPath/second.dart',
+      '$source// added\n',
+    );
+    await assertNoDiagnosticsInFile(second.path);
+    final third = newFile(
+      '$testPackageLibPath/third.dart',
+      '$source// unchanged\n',
+    );
+    await assertNoDiagnosticsInFile(third.path);
+
+    optionsFile.writeAsStringSync('$options    # exclude_packages: []\n');
+    final fourth = newFile(
+      '$testPackageLibPath/fourth.dart',
+      '$source// cleared\n',
+    );
+    await assertDiagnosticsInFile(fourth.path, [lint(0, import.length)]);
   }
 
   Future<void> test_show_combinator_is_allowed() async {

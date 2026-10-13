@@ -68,6 +68,7 @@ For local testing, replace `version` with the path to your checkout:
         path: C:/path/to/explicit_imports_alt
         # exclude_packages:
         #   - dart:**
+        #   - test
         #   - material_ui
         #   - cupertino_ui
         #   - flutter_test

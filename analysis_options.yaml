@@ -1,6 +1,8 @@
 include: package:lints/recommended.yaml
 
 analyzer:
+  errors:
+    prefer_final_in_for_each: ignore
   language:
     strict-casts: true
     strict-inference: true
