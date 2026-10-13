@@ -1,0 +1,16 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    prefer_final_locals: true
+    prefer_final_in_for_each: true
+
+plugins:
+  explicit_imports_alt:
+    path: .
