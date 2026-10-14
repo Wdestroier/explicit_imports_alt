@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Improved documentation.
+
 ## 1.0.0
 
 - Added import exclusions through a commented YAML list in

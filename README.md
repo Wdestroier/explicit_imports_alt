@@ -27,7 +27,7 @@ Add the commented directive under the plugin entry in your root `analysis_option
     plugins:
       explicit_imports_alt:
         version: ^1.0.0
-        # The commented lines below are read by the plugin.
+        # The commented lines below are read by the plugin!
         # exclude_packages:
         #   - dart:**
         #   - test

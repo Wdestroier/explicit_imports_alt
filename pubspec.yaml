@@ -1,5 +1,5 @@
 name: explicit_imports_alt
-version: 1.0.0
+version: 1.0.1
 description: A Dart analyzer plugin that enforces explicit imports with configurable package exclusions.
 repository: https://github.com/Wdestroier/explicit_imports_alt
 topics:
