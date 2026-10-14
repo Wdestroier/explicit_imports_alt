@@ -1,8 +1,7 @@
 # explicit_imports_alt
 
 A Dart analyzer plugin that flags imports unless they use a `show`
-combinator or an `as` prefix. The rule is registered as a warning, so
-it is enabled by default and does not need a `diagnostics` section.
+combinator or an `as` prefix.
 
 ## Install
 
@@ -31,6 +30,7 @@ Add the commented directive under the plugin entry in your root `analysis_option
         # The commented lines below are read by the plugin.
         # exclude_packages:
         #   - dart:**
+        #   - test
         #   - material_ui
         #   - cupertino_ui
         #   - flutter_test
