@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0
+
+- Support analyzer 14.5 and newer 14.x versions, allowing this plugin to run
+  alongside `auto_build_runner` 1.0.0 in the same analysis server.
+- Remove the unused direct `analyzer_plugin` dependency and its incompatible
+  upper bound.
+- Update analyzer testing utilities to cover the supported analyzer APIs.
+
 ## 1.0.1
 
 - Improved documentation.

@@ -140,7 +140,7 @@ _ImportExclusions _readConfiguredExclusions(
 
   var folder = packageRoot;
   while (true) {
-    final optionsFile = folder.getChildAssumingFile('analysis_options.yaml');
+    final optionsFile = folder.getFile('analysis_options.yaml');
     if (optionsFile.exists) {
       // Compare current contents so comment edits invalidate the cached matchers.
       final source = optionsFile.readAsStringSync();

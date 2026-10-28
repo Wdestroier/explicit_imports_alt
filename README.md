@@ -10,7 +10,7 @@ Add the plugin to the top-level `plugins` section of your
 
     plugins:
       explicit_imports_alt:
-        version: ^1.0.0
+        version: ^1.1.0
 
 The Dart analysis server should restart automatically after changing the `plugins`
 section. You do not need to add this plugin to your application's
@@ -26,7 +26,7 @@ Add the commented directive under the plugin entry in your root `analysis_option
 
     plugins:
       explicit_imports_alt:
-        version: ^1.0.0
+        version: ^1.1.0
         # The commented lines below are read by the plugin!
         # exclude_packages:
         #   - dart:**
@@ -59,7 +59,28 @@ Good:
     // ignore: explicit_imports_alt/explicit_imports
     import 'package:some_package/some_package.dart';
 
+## Compatibility with other plugins
+
+Analyzer plugins in the same analysis server share a dependency resolution.
+Version 1.1.0 supports analyzer `^14.5.0` and analysis_server_plugin `^0.3.24`,
+matching `auto_build_runner` 1.0.0. Enable both with:
+
+    plugins:
+      explicit_imports_alt:
+        version: ^1.1.0
+      auto_build_runner:
+        version: ^1.0.0
+
+Older explicit_imports_alt releases cap analyzer at 13.0.0 and cannot resolve
+alongside auto_build_runner 1.0.0. Update the plugin version in
+`analysis_options.yaml` and restart the analysis server after upgrading.
+
 ## Development
+
+Run `dart test` for rule tests and
+`dart run tool/check_plugin_compatibility.dart` to resolve and analyze a temporary
+project with both plugins enabled. The latter downloads auto_build_runner 1.0.0
+from pub.dev and does not start a build_runner watcher.
 
 For local testing, replace `version` with the path to your checkout:
 
